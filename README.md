@@ -21,11 +21,14 @@ We will add support for generalized NER and sanitization in the near future.
 ### Complete Usage Example
 This is a complete usage example where we sanitize names and currency values. Make sure you either have [Universal NER](https://huggingface.co/Universal-NER/UniNER-7B-all) or [Llama-3 8B Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) available. 
 
-1. Initialize a `NER` and `Sanitizer` object:
+1. Import all utilities:
 ```
 # Import utils
 from preempt.utils import *
+```
 
+2. Initialize a `NER` and `Sanitizer` object:
+```
 # Load NER object
 # ner_model = NER("/path/to/uniner-7b-pii-v3", device="cuda:1")
 ner_model = NER("/path/to/Meta-Llama-3-8B-Instruct/", device="cuda:1")
@@ -38,7 +41,7 @@ sanitizer_money = Sanitizer(ner_model, key = "FF4359D8D580AA4F7F036D6F04FC6A94",
 sentences = ["Ben Parker and John Doe went to the bank and withdrew $200.", "Adam won $20 in the lottery."]
 ```
 
-2. Sanitize names in `sentences`:
+3. Sanitize names in `sentences`:
 ```
 # Sanitizing names
 sanitized_sentences, _ = sanitizer_name.encrypt(sentences, entity='Name', epsilon=1)
@@ -52,7 +55,7 @@ Sanitized sentences:
 """
 ```
 
-3. Sanitize currency values in `sanitized_sentences`:
+4. Sanitize currency values in `sanitized_sentences`:
 ```
 # Sanitizing currency values
 sanitized_sentences, _ = sanitizer_money.encrypt(sanitized_sentences, entity='Money', epsilon=1)
@@ -66,7 +69,7 @@ Sanitized sentences:
 """
 ```
 
-4. Desanitize encrypted names in `sanitized_sentences`:
+5. Desanitize encrypted names in `sanitized_sentences`:
 ```
 # Desanitizing names
 desanitized_sentences = sanitizer_name.decrypt(sanitized_sentences, entity='Name')
@@ -80,7 +83,7 @@ Desanitized sentences:
 """
 ```
 
-5. Desanitize encrypted currency values in `desanitized_sentences`:
+6. Desanitize encrypted currency values in `desanitized_sentences`:
 ```
 # Desanitizing currency values
 desanitized_sentences = sanitizer_money.decrypt(desanitized_sentences, entity='Money')
