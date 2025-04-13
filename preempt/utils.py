@@ -448,7 +448,6 @@ class Sanitizer():
         if use_fpe:
             names_dataset = load_data("preempt/names_dataset.json")
             first_names, last_names = names_dataset["first_names"], names_dataset["last_names"]
-            print(len(first_names))
 
             # Suppose we have n names. Chuck the last k names in the list and plug in these.
             input_first_names = []
@@ -839,7 +838,7 @@ class Sanitizer():
         extracted = self.ner.extract(inputs, entity_type=entity)[entity]
         self.new_entities, self.entity_lookup, self.entity_mapping = enc_fn_mapping[entity](extracted, use_fpe=use_fpe, use_mdp=use_mdp, epsilon=epsilon)
 
-        print(inputs)
+        # print(inputs)
         for i, line in enumerate(inputs):
         # Get extracted/encrypted data  for the ith line.
         # Substitute all values.
