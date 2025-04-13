@@ -23,6 +23,9 @@ This is a complete usage example where we sanitize names and currency values. Ma
 
 1. Initialize a `NER` and `Sanitizer` object:
 ```
+# Import utils
+from preempt.utils import *
+
 # Load NER object
 # ner_model = NER("/path/to/uniner-7b-pii-v3", device="cuda:1")
 ner_model = NER("/path/to/Meta-Llama-3-8B-Instruct/", device="cuda:1")
