@@ -1,7 +1,7 @@
 # preempt
 This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
 
-For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refer to the `main` branch.
+For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refr to [this repo](https://github.com/danshumaan/preempt-experiments).
 ## Setup
 Install libraries in a Python 3.11.4 virtual environment with `requirements.txt`.
 
