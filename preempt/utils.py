@@ -168,15 +168,15 @@ def llama_prompt_preprocessor(all_text: List[str], **kwargs) -> List[str]:
         conv = get_conv_template('llama-3')
         if entity=='Age':
             conv.set_system_message(
-                f"Please identify words in the sentence that can be categorized as '{entity}'. Format the output as list with no additional text such as 'years' or 'aged'." 
+                f"Please identify words in the sentence that can be categorized as '{entity}'. Format the output as list with no additional text such as 'years' or 'aged'. If no words are found, return an empty list. Example: []" 
             )
         elif entity=='Name':
             conv.set_system_message(
-                f"Please identify words in the sentence that can be categorized as '{entity}'. Format the output as list with no additional text. Example: ['{entity} 1', '{entity} 2']."
+                f"Please identify words in the sentence that can be categorized as '{entity}'. Format the output as list with no additional text. Example: ['{entity} 1', '{entity} 2']. If no words are found, return an empty list. Example: []"
             )
         elif entity=='Money':
             conv.set_system_message(
-                f"Please identify Currency Value from the given text. DO NOT ADD '000' TO ANY VALUE. DO NOT REMOVE SPACES IN ANY VALUE. Format the output as list with no additional text. Example: ['Currency Value 1', 'Currency Value 2']."
+                f"Please identify Currency Value from the given text. DO NOT ADD '000' TO ANY VALUE. DO NOT REMOVE SPACES IN ANY VALUE. Format the output as list with no additional text. Example: ['Currency Value 1', 'Currency Value 2']. If no words are found, return an empty list. Example: []"
             )
         conv.append_message(conv.roles[0], input)
         conv.append_message(conv.roles[1], None)
@@ -735,10 +735,15 @@ class Sanitizer():
         decrypted_lines = []
         use_fpe = kwargs['use_fpe']
         use_mdp = kwargs['use_mdp']
+        extraction = kwargs['extraction']
+        if extraction is not None:
+            decrypt_target = extraction
+        else:
+            decrypt_target = self.entity_mapping
         if use_fpe:
             offset=7
             for line_idx, line in enumerate(inputs):
-                for value in self.entity_mapping[line_idx]:
+                for value in decrypt_target[line_idx]:
                     val = str(value)
                     if len(val)<6: continue
                     decrypt = self.fpe_decrypt(val)
@@ -754,7 +759,7 @@ class Sanitizer():
 
         elif use_mdp:
             for line_idx, line in enumerate(inputs):
-                for value in self.entity_mapping[line_idx]:
+                for value in decrypt_target[line_idx]:
                     line = self.replace_word(line, value, self.entity_mapping[line_idx][value])
                 decrypted_lines.append(line)
 
