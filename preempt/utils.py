@@ -11,7 +11,7 @@ from pyfpe_ff3 import FF3Cipher
 from names_dataset import NameDataset
 import names
 
-from fastchat.conversation import get_conv_template, register_conv_template, Conversation, SeparatorStyle
+from .conversation import get_conv_template, register_conv_template, Conversation, SeparatorStyle
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
