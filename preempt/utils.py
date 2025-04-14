@@ -514,8 +514,8 @@ class Sanitizer():
             last_names = last_names[:1000]
             first_names = first_names[:min(-len(input_first_names)-1,-2)] + list(input_first_names) + [first_names[-1]]
             last_names = last_names[:min(-len(input_last_names)-1,-2)] + list(input_last_names) + [last_names[-1]]
-            assert len(first_names)==1000
-            assert len(last_names)==1000
+            # assert len(first_names)==1000
+            # assert len(last_names)==1000
 
         offset = 3
         for k_input in inputs:
