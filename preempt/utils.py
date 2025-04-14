@@ -79,7 +79,7 @@ def make_names_dataset() -> None:
             temp.append(last_names[i])
 
     last_names = temp[:]
-    save_fn({"first_names": first_names, "last_names": last_names}, "preempt/names_dataset.json")
+    save_fn({"first_names": first_names, "last_names": last_names}, "./preempt/names_dataset.json")
 
 """
 ###################################################
@@ -446,7 +446,13 @@ class Sanitizer():
         use_fpe = kwargs['use_fpe']
 
         if use_fpe:
-            names_dataset = load_data("preempt/names_dataset.json")
+            try:
+                names_dataset = load_data("preempt/names_dataset.json")
+            except:
+                print("Names dataset not found. Generating...")
+                make_names_dataset()
+                print("Saved at ./preempt/names_dataset.json")
+                load_data("preempt/names_dataset.json")
             first_names, last_names = names_dataset["first_names"], names_dataset["last_names"]
 
             # Suppose we have n names. Chuck the last k names in the list and plug in these.
