@@ -214,7 +214,7 @@ def gen_delimiters(model_path: str) -> str:
 
     }
     for key in delimiters:
-        if key in model_path:return delimiters[key]
+        if key in model_path.lower():return delimiters[key]
 
 def prompt_preprocessor(model_path: str):
     """
