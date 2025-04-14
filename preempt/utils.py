@@ -811,8 +811,13 @@ class Sanitizer():
             decrypted_lines (List[str]): List of desanitized strings
         """
         decrypted_lines = []
+        extraction = kwargs['extraction']
+        if extraction is not None:
+            decrypt_target = extraction
+        else:
+            decrypt_target = self.entity_mapping
         for line_idx, line in enumerate(inputs):
-                extr = self.entity_mapping[line_idx]
+                extr = decrypt_target[line_idx]
                 for k in range(len(extr['pt'])):
                     line = self.replace_word(line, extr['ct'][k], extr['pt'][k])
                 decrypted_lines.append(line)
