@@ -15,7 +15,7 @@ uv add preempt
 ```
 3. Import Prϵϵmpt methods and classes with `from preempt.utils import *` to use in your code. See the usage examples below and in `demo.ipynb`.
 
-If you would like to work with repo, clone the repo, navigate to the base folder (`preempt`) and use the following:
+If you would like to work with the repo, then clone the repo, navigate to the base folder (`preempt`) and use the following:
 ```
 uv venv --python 3.11
 . ./.venv/bin/activate
