@@ -38,7 +38,7 @@ register_conv_template(
     )
 )
 
-def make_names_dataset() -> None:
+def make_names_dataset(save_path:str) -> None:
     """
     For making a new dataset of names for sanitizing names.
     """
@@ -80,7 +80,7 @@ def make_names_dataset() -> None:
             temp.append(last_names[i])
 
     last_names = temp[:]
-    save_fn({"first_names": first_names, "last_names": last_names}, "./preempt/names_dataset.json")
+    save_fn({"first_names": first_names, "last_names": last_names}, save_path)
 
 """
 ###################################################
@@ -451,9 +451,10 @@ class Sanitizer():
                 names_dataset = load_data("preempt/names_dataset.json")
             except:
                 print("Names dataset not found. Generating...")
-                make_names_dataset()
-                print(f"Saved at {os.getcwd()}/names_dataset.json")
-                names_dataset = load_data(f"{os.getcwd()}/names_dataset.json")
+                names_dataset_save_path = f"{os.getcwd()}/names_dataset.json"
+                make_names_dataset(names_dataset_save_path)
+                print(f"Saved at {names_dataset_save_path}")
+                names_dataset = load_data(f"{names_dataset_save_path}")
             first_names, last_names = names_dataset["first_names"], names_dataset["last_names"]
 
             # Suppose we have n names. Chuck the last k names in the list and plug in these.
