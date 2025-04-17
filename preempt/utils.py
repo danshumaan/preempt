@@ -137,6 +137,18 @@ def load_data(fp: str) -> Dict[str, Any]:
 #################   Pipelining    #################
 ###################################################
 """
+def check(name_list: List[str], target: str):
+    """
+    For checking if a target name exists in a given list of names
+    """
+    for i, n in enumerate(name_list):
+        if finder(name_list[i], target):
+            return i
+def finder(word1, word2):
+    encoded1 = unicodedata.normalize('NFC', word1)
+    encoded2 = unicodedata.normalize('NFC', word2)
+    return encoded1==encoded2
+
 def preprocess_instance(source: List[str]):
     """
     This method is referenced from https://github.com/universal-ner/universal-ner
@@ -529,12 +541,12 @@ class Sanitizer():
                         # If already first-last name, run and conjoin.
                         t_names = input.split()
                         a = t_names[0]
-                        pt_fn_idx = first_names.index(a)
+                        pt_fn_idx = check(first_names, a) # first_names.index(a)
                         pt_fn_idx = "0"*(offset-len(str(pt_fn_idx))) + str(pt_fn_idx)
                         pt_idx = "" + pt_fn_idx
 
                         for b in t_names[1:]:
-                            pt_ln_idx = last_names.index(b)
+                            pt_ln_idx = check(last_names, b) # last_names.index(b)
                             pt_ln_idx = "0"*(offset-len(str(pt_ln_idx))) + str(pt_ln_idx)
                             pt_idx += pt_ln_idx
 
@@ -550,7 +562,7 @@ class Sanitizer():
                     else:
                         a = input
                         try:
-                            pt_fn_idx = first_names.index(a)
+                            pt_fn_idx = check(first_names, a) # first_names.index(a)
                             pt_fn_idx = "0"*(offset-len(str(pt_fn_idx))) + str(pt_fn_idx)
                             pt_idx = "" + pt_fn_idx + "9"*offset
 
@@ -558,7 +570,7 @@ class Sanitizer():
                             ct_idxs = [ct_idx[i:i+offset] for i in range(0, len(ct_idx), offset)]
                             ct_name = first_names[int(ct_idxs[0])]
                         except:
-                            pt_fn_idx = last_names.index(a)
+                            pt_fn_idx = check(last_names, a) # last_names.index(a)
                             pt_fn_idx = "0"*(offset-len(str(pt_fn_idx))) + str(pt_fn_idx)
                             pt_idx = "" + "9"*offset + pt_fn_idx
 
@@ -598,15 +610,6 @@ class Sanitizer():
         Returns:
             decrypted_lines (List[str]): List of desanitized strings
         """       
-        def check(name_list, target):
-            for i, n in enumerate(name_list):
-                if finder(name_list[i], target):
-                    return i
-        def finder(word1, word2):
-            encoded1 = unicodedata.normalize('NFC', word1)
-            encoded2 = unicodedata.normalize('NFC', word2)
-            return encoded1==encoded2
-
         extraction = kwargs['extraction']
         use_cached_values = kwargs['use_cache']
         decrypted_lines = []
@@ -652,7 +655,7 @@ class Sanitizer():
 
                     else:
                         a = name
-                        pt_fn_idx = first_names.index(a)
+                        pt_fn_idx = check(first_names, a) # first_names.index(a)
                         pt_fn_idx = "0"*(offset-len(str(pt_fn_idx))) + str(pt_fn_idx)
                         pt_idx = "" + pt_fn_idx + "9"*offset
 
