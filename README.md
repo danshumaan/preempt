@@ -136,7 +136,7 @@ desanitized_sentences = sanitizer.decrypt(sanitized_sentences, entity='Name')
 
 If your NER model can't reliably pick up sanitized attributes, consider setting `use_cache=True`, to decrypt using stored NER values.
 ```
-desanitized_sentences = sanitizer.decrypt(sanitized_sentences, entity='Name')
+desanitized_sentences = sanitizer.decrypt(sanitized_sentences, entity='Name', use_cache=True)
 ```
 
 #### Sanitizing multiple PII attributes
