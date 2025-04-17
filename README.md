@@ -1,7 +1,7 @@
 # preempt
 Prϵϵmpt is a security framework designed to protect personally identifiable information (PII) in text by applying encryption or other privacy-preserving techniques before that data is sent to third-party large language model (LLM) APIs. 
 
-Prϵϵmpt achieves high utility for a diverse range of tasks while maintaining cryptographic guarantees. For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refer to [this repo](https://github.com/danshumaan/preempt-experiments).
+Prϵϵmpt achieves high utility for a diverse range of tasks while maintaining cryptographic privacy guarantees. For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refer to [this repo](https://github.com/danshumaan/preempt-experiments).
 
 This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
 ## Setup
