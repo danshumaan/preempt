@@ -5,17 +5,24 @@ Prϵϵmpt achieves high utility for a diverse range of tasks while maintaining c
 
 This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
 ## Setup
-1. Clone this repo and navigate to the root directory (`preempt`).
-2. Install uv following the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
-3. Create a virtual environment with Python 3.11, activate it and add preempt:
+1. Install uv following the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
+2. Create a virtual environment with Python 3.11, activate it and add preempt:
 ```
 uv venv --python 3.11
 . ./.venv/bin/activate
 uv init
 uv add preempt
 ```
-If you already have a project in which you would like to use Prϵϵmpt, use either `pip install preempt` or `uv add preempt`, depending on the set up.
+3. Import Prϵϵmpt methods and classes with `from preempt.utils import *` to use in your code. See the usage examples below and in `demo.ipynb`.
 
+If you would like to work with repo, clone the repo, navigate to the base folder (`preempt`) and use the following:
+```
+uv venv --python 3.11
+. ./.venv/bin/activate
+uv sync
+```
+
+If you already have a project in which you would like to use Prϵϵmpt, use either `pip install preempt` or `uv add preempt`, depending on the set up.
 
 ## Usage
 Additional usage examples can be found in `demo.ipynb`.
