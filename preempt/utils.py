@@ -1,5 +1,6 @@
 import json
 import math
+import os
 import random
 import sys
 from typing import Dict, List, Any, Optional, Union
@@ -451,8 +452,8 @@ class Sanitizer():
             except:
                 print("Names dataset not found. Generating...")
                 make_names_dataset()
-                print("Saved at ./preempt/names_dataset.json")
-                names_dataset = load_data("preempt/names_dataset.json")
+                print(f"Saved at {os.getcwd()}/names_dataset.json")
+                names_dataset = load_data(f"{os.getcwd()}/names_dataset.json")
             first_names, last_names = names_dataset["first_names"], names_dataset["last_names"]
 
             # Suppose we have n names. Chuck the last k names in the list and plug in these.
