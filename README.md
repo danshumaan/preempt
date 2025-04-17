@@ -10,6 +10,7 @@ This is a modular version of Prϵϵmpt, meant to be used as part of other projec
 ```
 uv venv --python 3.11
 . ./.venv/bin/activate
+uv init
 uv add preempt
 ```
 3. Import Prϵϵmpt methods and classes with `from preempt.utils import *` to use in your code. See the usage examples below and in `demo.ipynb`.
