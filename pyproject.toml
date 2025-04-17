@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "preempt"
-version = "0.1.14"
+version = "0.1.18"
 description = "Sanitize text containing PII attributes while mainting high utility with cryptographic guarantees"
 readme = "README.md"
 requires-python = ">=3.11"
