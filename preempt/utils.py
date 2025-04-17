@@ -439,11 +439,11 @@ class Sanitizer():
             Union[List[str], Union[List[str],List[str]], Dict[str,str]]: Containing:
             1. new_entities (List[List[str]]): A nested list of strings, where each nested list contains the new encrypted entities.
             2. entity_lookup (Union[List[str],List[str]]): Two lists, with the first one having the list of first names and the second being the list of last names.
-            3. entity_mapping (Dict[str,str]): Dict, maps ciphertext names to plaintext names.
+            3. entity_mapping (List[Dict[str,str]]): List of dicts, maps cipher text names to plain text names.
         """
         new_entities = []
         entity_lookup = []
-        entity_mapping = dict()
+        entity_mapping = []
         use_fpe = kwargs['use_fpe']
 
         if use_fpe:
@@ -522,6 +522,7 @@ class Sanitizer():
         offset = 3
         for k_input in inputs:
             temp = []
+            temp_dict = {}
             for k, input in enumerate(k_input):
                 if use_fpe:
                     if " " in input:
@@ -572,16 +573,17 @@ class Sanitizer():
                         if ct_name not in temp: temp.append(ct_name)
 
                     # Grad mapping for decoding and for sanity.
-                    entity_mapping[ct_name] = input
+                    temp_dict[ct_name] = input
 
                 else:
                     first_names = []
                     last_names = []
                     temp_name = names.get_full_name(gender='male')
                     temp.append(temp_name)
-                    entity_mapping[temp_name] = input
+                    temp_dict[temp_name] = input
 
             new_entities.append(temp)
+            entity_mapping.append(temp_dict)
         entity_lookup.append(first_names)
         entity_lookup.append(last_names)
 
