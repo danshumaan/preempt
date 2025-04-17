@@ -1,16 +1,20 @@
 # preempt
-This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
+Prϵϵmpt is a security framework designed to protect personally identifiable information (PII) in text by applying encryption or other privacy-preserving techniques before that data is sent to third-party large language model (LLM) APIs. 
 
-For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refer to [this repo](https://github.com/danshumaan/preempt-experiments).
+Prϵϵmpt achieves high utility for a diverse range of tasks while maintaining cryptographic guarantees. For the experiments and results found in [Prϵϵmpt: Sanitizing Sensitive Prompts for LLMs](https://arxiv.org/abs/2504.05147), please refer to [this repo](https://github.com/danshumaan/preempt-experiments).
+
+This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
 ## Setup
 1. Clone this repo and navigate to the root directory (`preempt`).
 2. Install uv following the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
-3. Create a virtual environment with Python 3.11 and activate it:
+3. Create a virtual environment with Python 3.11, activate it and add preempt:
 ```
 uv venv --python 3.11
 . ./.venv/bin/activate
-uv sync
+uv init
+uv add preempt
 ```
+If you already have a project in which you would like to use Prϵϵmpt, use either `pip install preempt` or `uv add preempt`, depending on the set up.
 
 
 ## Usage
@@ -30,7 +34,7 @@ from preempt.utils import *
 2. Initialize a `NER` and `Sanitizer` object:
 ```
 # Load NER object
-# ner_model = NER("/path/to/uniner-7b-pii-v3", device="cuda:1")
+# ner_model = NER("/path/to/UniNER-7B-all", device="cuda:1")
 ner_model = NER("/path/to/Meta-Llama-3-8B-Instruct/", device="cuda:1")
 
 # Load Sanitizer object
@@ -72,7 +76,7 @@ Sanitized sentences:
 5. Desanitize encrypted names in `sanitized_sentences`:
 ```
 # Desanitizing names
-desanitized_sentences = sanitizer_name.decrypt(sanitized_sentences, entity='Name')
+desanitized_sentences = sanitizer_name.decrypt(sanitized_sentences, entity='Name', use_cache=True)
 print("Desanitized sentences:")
 print(desanitized_sentences)
 """
@@ -86,7 +90,7 @@ Desanitized sentences:
 6. Desanitize encrypted currency values in `desanitized_sentences`:
 ```
 # Desanitizing currency values
-desanitized_sentences = sanitizer_money.decrypt(desanitized_sentences, entity='Money')
+desanitized_sentences = sanitizer_money.decrypt(desanitized_sentences, entity='Money', use_cache=True)
 print("Desanitized sentences:")
 print(desanitized_sentences)
 """
@@ -126,6 +130,11 @@ PII values found during NER are stored under `sanitizer.new_entities` as a neste
 The mappings between plain text and cipher text PII values are stored under `sanitizer.entity_mapping`. FPE will typically extract PII values from the sanitized sentences before decryption.
 
 Sanitized sentences can be desanitized using `sanitizer.decrypt()`:
+```
+desanitized_sentences = sanitizer.decrypt(sanitized_sentences, entity='Name')
+```
+
+If your NER model can't reliably pick up sanitized attributes, consider setting `use_cache=True`, to decrypt using stored NER values.
 ```
 desanitized_sentences = sanitizer.decrypt(sanitized_sentences, entity='Name')
 ```

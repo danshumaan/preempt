@@ -883,7 +883,9 @@ class Sanitizer():
         Args:   
             inputs (List[str]): List of sanitized inputs.
             extracted (Optional[Dict[str, List[str]]]): Dictionary of extracted sensitive attributes (see NER.extract())
-
+            use_mdp (bool): Retrieve cached values during decryption.
+            use_fpe (bool): Use FPE for decrypting alphanumerical values.
+            use_cache (bool): Use cipher text values cached during santization, instead of using freshly extracted values (when NER is not reliable).
         """
         dec_fn_mapping = {
             "Name": self.decrypt_names,
