@@ -604,15 +604,16 @@ class Sanitizer():
             return encoded1==encoded2
 
         extraction = kwargs['extraction']
+        use_cached_values = kwargs['use_cache']
         decrypted_lines = []
 
         for line_idx, line in enumerate(inputs):
             offset = 3
             first_names, last_names = self.entity_lookup
-            if extraction is not None:
-                decrypt_target = extraction
-            else:
+            if extraction is None or use_cached_values:
                 decrypt_target = self.entity_mapping
+            else:
+                decrypt_target = extraction
             
             # print(decrypt_target)
             # print("FIRST NAMES", first_names)
@@ -742,10 +743,11 @@ class Sanitizer():
         use_fpe = kwargs['use_fpe']
         use_mdp = kwargs['use_mdp']
         extraction = kwargs['extraction']
-        if extraction is not None:
-            decrypt_target = extraction
-        else:
+        use_cached_values = kwargs['use_cache']
+        if extraction is None or use_cached_values:
             decrypt_target = self.entity_mapping
+        else:
+            decrypt_target = extraction
         if use_fpe:
             offset=7
             for line_idx, line in enumerate(inputs):
@@ -773,7 +775,7 @@ class Sanitizer():
 
     def encrypt_age(self, inputs: List[str], **kwargs)-> Union[List[List[str]], Union[List[str],List[str]], List[Dict[str,List[str]]]]:
         """
-        Encrypting numerical money values with FPE or m-LDP
+        Encrypting age values with m-LDP
 
         Args:
             inputs (List[str]): List of strings with sensitive values.
@@ -817,11 +819,9 @@ class Sanitizer():
             decrypted_lines (List[str]): List of desanitized strings
         """
         decrypted_lines = []
-        extraction = kwargs['extraction']
-        if extraction is not None:
-            decrypt_target = extraction
-        else:
-            decrypt_target = self.entity_mapping
+        # extraction = kwargs['extraction']
+        # use_cached_values = kwargs['use_cache']
+        decrypt_target = self.entity_mapping
         for line_idx, line in enumerate(inputs):
                 extr = decrypt_target[line_idx]
                 for k in range(len(extr['pt'])):
@@ -874,7 +874,7 @@ class Sanitizer():
             inputs: List[str], 
             entity='Name', 
             extracted: Optional[Dict[str, List[str]]]=None, 
-            use_mdp=False, use_fpe=True
+            use_mdp=False, use_fpe=True, use_cache=False,
         ):
         """
         Takes in a list of inputs and returns a list of desanitized outputs.
@@ -892,6 +892,7 @@ class Sanitizer():
         }
         data_decrypted = []
         if extracted is None: extracted = self.ner.extract(inputs, entity_type=entity)[entity]
-        data_decrypted = dec_fn_mapping[entity](inputs, extraction=extracted, use_fpe=use_fpe, use_mdp=use_mdp)
+        data_decrypted = dec_fn_mapping[entity](inputs, extraction=extracted, 
+                                                use_fpe=use_fpe, use_mdp=use_mdp, use_cache=use_cache)
 
         return data_decrypted
