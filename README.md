@@ -6,9 +6,9 @@ Prϵϵmpt achieves high utility for a diverse range of tasks while maintaining c
 This is a modular version of Prϵϵmpt, meant to be used as part of other projects. 
 ## Setup
 1. Install uv following the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
-2. Create a virtual environment with Python 3.11, activate it and add preempt:
+2. Create a virtual environment with Python 3.10, activate it and add preempt:
 ```
-uv venv --python 3.11
+uv venv --python 3.10
 . ./.venv/bin/activate
 uv init
 uv add preempt
@@ -17,7 +17,7 @@ uv add preempt
 
 If you would like to work with the repo, then clone the repo, navigate to the base folder (`preempt`) and use the following:
 ```
-uv venv --python 3.11
+uv venv --python 3.10
 . ./.venv/bin/activate
 uv sync
 ```
@@ -32,10 +32,10 @@ We will add support for generalized NER and sanitization in the near future.
 ### Complete Usage Example
 This is a complete usage example where we sanitize names and currency values. Make sure you either have [Universal NER](https://huggingface.co/Universal-NER/UniNER-7B-all) or [Llama-3 8B Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) available. 
 
-1. Import all utilities:
+1. Import NER and Sanitizer objects:
 ```
-# Import utils
-from preempt.utils import *
+from preempt.ner import *
+from preempt.sanitizer import *
 ```
 
 2. Initialize a `NER` and `Sanitizer` object:
