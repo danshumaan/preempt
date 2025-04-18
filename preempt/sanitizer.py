@@ -120,11 +120,14 @@ class Sanitizer():
             try:
                 names_dataset = load_data("preempt/names_dataset.json")
             except:
-                print("Names dataset not found. Generating...")
                 names_dataset_save_path = f"{os.getcwd()}/names_dataset.json"
-                make_names_dataset(names_dataset_save_path)
-                print(f"Saved at {names_dataset_save_path}")
-                names_dataset = load_data(f"{names_dataset_save_path}")
+                try:
+                    names_dataset = load_data(f"{names_dataset_save_path}")
+                except:
+                    print("Names dataset not found. Generating...")
+                    make_names_dataset(names_dataset_save_path)
+                    print(f"Saved at {names_dataset_save_path}")
+                    names_dataset = load_data(f"{names_dataset_save_path}")
             first_names, last_names = names_dataset["first_names"], names_dataset["last_names"]
 
             # Suppose we have n names. Chuck the last k names in the list and plug in these.
