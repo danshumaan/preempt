@@ -118,7 +118,12 @@ We currently support [Universal NER](https://huggingface.co/Universal-NER/UniNER
 
 Initialize a `NER` class object by passing the path to one of the supported NER models mentioned above:
 ```
-ner_model = NER("/path/to/Meta-Llama-3-8B-Instruct/", device="cuda:0")
+device = (
+    "mps" if torch.backends.mps.is_available() 
+    else "cuda" if torch.cuda.is_available() 
+    else "cpu"
+)
+ner_model = NER("/path/to/Meta-Llama-3-8B-Instruct/", device=device)
 ```
 Extract PII values found in a list of target strings using `ner_model.extract()`:
 ```
